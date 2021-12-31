@@ -14,8 +14,9 @@
     "serve": "11.2.0"
   },
   "scripts": {
+    "load": "sh ./scripts/dev.sh",
     "data-handler": "node ./scripts/loader.js",
-    "data-parser": "node ./scripts/parser.js"
+    "parser": "node ./scripts/parser.js"
   },
   "author": "Vera Wei <vera.wqm@gmail.com>",
   "license": "ISC"

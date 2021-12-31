@@ -33,9 +33,16 @@
 
 # 安装方式
 ## 预安装基本开发环境
+- 打开电脑运行终端 (command + space serach: terminal)
 - Install **[Git](https://git-scm.com/download/mac)**
 - Install the lastest **[Nodejs](https://nodejs.org/en/)**
 - Install **[npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)**
+
+## 如何获取环境变量，后面会用到
+![instruction](assets/instruction.png)
+## eg.
+![terminal](assets/terminal.png)
+
 
 ```bash
 # 下载
@@ -44,11 +51,16 @@ git clone https://github.com/VeraWei/douban-data-storage.git
 # 安装依赖
 npm install
 
-# 获取 HTML 数据 (eg. PERSONAL_KEY=nothinganymore sh ./script/dev.sh)
-PERSONAL_KEY=[your-douban-id] sh ./script/dev.sh
+# 在终端中设置个人环境变量
+export PERSONAL_KEY=[your-douban-id]
+export PERSONAL_COOKIE=[your-cookie]
+
+
+# 获取所有html页面数据
+npm run load
 
 # 如果你想要获得完整的JSON 数据可以继续执行
-npm run data-parser
+npm run parser
 
 # 执行完所有人物后，可以在你本地的 personal 文件夹下看到所有的数据内容，应该是一些html和几份json文件
 # html 只做了简单的处理，可直接打开。
