@@ -1,6 +1,7 @@
 # 写在前面
 > 作为豆瓣的一个深度用户，这里凝结着这些年来看过的书，做过的思考，每每闲来无事，会希望能反复翻阅曾经的只言片语。近来由于担心自己的数据突然消失，故认为还是有一份本地保存的好，如果你也有类似的想法，那么这个小工具大概适合你。
-**这份工具暂只支持几种数据类型，也没有获取对应的图片。** （因为我没有服务器。。。:smirk: ）
+
+**这份工具暂只支持 Mac 用户，且只支持几种数据类型。** :smirk:
 
 # Support List
 ## 书
@@ -46,7 +47,10 @@ npm install
 # 获取 HTML 数据 (eg. PERSONAL_KEY=nothinganymore sh ./script/dev.sh)
 PERSONAL_KEY=[your-douban-id] sh ./script/dev.sh
 
-# 你可以在你本地的 personal 文件夹下看到所有的数据内容，应该是一些 html 和 几份json数据
+# 如果你想要获得完整的JSON 数据可以继续执行
+npm run data-parser
+
+# 执行完所有人物后，可以在你本地的 personal 文件夹下看到所有的数据内容，应该是一些html和几份json文件
 # html 只做了简单的处理，可直接打开。
 ## output directory
 /personal
