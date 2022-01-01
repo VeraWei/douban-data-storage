@@ -65,9 +65,9 @@ git clone https://github.com/VeraWei/douban-data-storage.git
 # 安装依赖
 npm install
 
-# 在终端中设置个人环境变量
+# 在终端中设置个人环境变量, key 没有单引号，cookie有。
 export PERSONAL_KEY=[your-douban-id]
-export PERSONAL_COOKIE=[your-cookie]
+export PERSONAL_COOKIE='your-cookie'
 
 
 # 获取所有html页面数据
