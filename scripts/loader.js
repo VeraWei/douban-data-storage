@@ -12,7 +12,7 @@ let child;
 const fetchCategories = (category, subCategory) => {
 
   let dirPath = `personal/${category}/${subCategory}/list`;
-  if (subCategory === 'reviews') { 
+  if (['reviews', 'notes'].includes(subCategory)) { 
     dirPath = `personal/${subCategory}/list`;
   }
 
@@ -58,8 +58,21 @@ const readListFiles = (folderPath, subCategory) => {
   fs.readdirSync(path.join(__dirname, '..', listFolderPath)).forEach(filePath => {
     const data = fs.readFileSync(path.join(__dirname, '..', listFolderPath, filePath), 'utf8');
     const $ = cheerio.load(data);
-    const elements = (subCategory === 'annotation') ? $('.rnotes li h5 > a') : $('.review-list .review-item h2 a');
-    elements.each((index, element) => {
+    
+    let elements = [];
+    if (subCategory === 'annotation') {
+      elements = $('.rnotes li h5 > a');
+    } else if (subCategory === 'reviews') {
+      elements =  $('.review-list .review-item h2 a');
+    } else if (subCategory === 'notes') {
+      return $('.note-container').each((index, element) => {
+        const link = $(element).attr('data-url');
+        const pageNum = link.split('/')[4];
+        fetchDetailFile(link, folderPath, pageNum);
+      });
+    }
+
+    return elements.each((index, element) => {
       const link = $(element).attr('href');
       const pageNum = link.split('/')[4];
       fetchDetailFile(link, folderPath, pageNum);
@@ -80,6 +93,7 @@ const init = () => {
   
   fetchCategories('book', 'annotation');
   fetchCategories('book', 'reviews');
+  fetchCategories('book', 'notes');
 }
 
 (() => {
@@ -87,6 +101,7 @@ const init = () => {
 
   const annotationPath = 'personal/book/annotation';
   const reviewsPath = 'personal/reviews';
+  const notesPath = 'personal/notes';
 
   // add more detail files
   child?.on('close', (err) => {
@@ -97,5 +112,6 @@ const init = () => {
     console.log('The files fetching process closed');
     readListFiles(annotationPath, 'annotation');
     readListFiles(reviewsPath, 'reviews');
+    readListFiles(notesPath, 'notes');
   });
 })();

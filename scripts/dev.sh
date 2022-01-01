@@ -29,4 +29,8 @@ curl "https://book.douban.com/people/$PERSONAL_KEY/annotation/" -H 'Referer: htt
 # handle reviews
 mkdir -p personal/reviews/list
 curl "https://www.douban.com/people/$PERSONAL_KEY/reviews" -H 'Referer: https://book.douban.com' -H "Cookie: $PERSONAL_COOKIE" --compressed --output personal/reviews/list/0.html
+
+# fetch notes
+mkdir -p personal/notes/list
+curl "https://www.douban.com/people/$PERSONAL_KEY/notes" -H 'Referer: https://accounts.douban.com' -H "Cookie: $PERSONAL_COOKIE" --compressed --output personal/notes/list/0.html
 npm run data-handler

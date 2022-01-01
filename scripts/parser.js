@@ -17,6 +17,7 @@ const $_parseDom = ($) => {
   $('#db-usr-profile .info ul').remove();
   $('#comments').remove();
   $('form').remove();
+  $('img[title="展开全文"]').remove();
 };
 
 const handleTagA = ($) => {
@@ -36,6 +37,15 @@ const handleTagA = ($) => {
     if (id) {
       const href = `../detail/${id}.html`;
       $(item).find('h2 a').attr('href', href);
+    }
+  });
+
+  // https://book.douban.com/review/12463105/
+  $('.note-container').each((index, item) => {
+    const id = $(item).attr('data-url').split('/')[4];
+    if (id) {
+      const href = `../detail/${id}.html`;
+      $(item).find('h3>a').attr('href', href);
     }
   });
 
@@ -105,6 +115,7 @@ const musicData = {
 }
 
 const reviewsData = [];
+const notesData = [];
 
 const annotationData = {
   "detail": [],
@@ -173,6 +184,19 @@ const handleReviewFiles = ($) => {
   reviewsData.push(data);
 }
 
+// no need to handle reviews list, info from detail pages is enough
+const handleNotesFiles = ($) => {
+  const data = {};
+  const $content = $(".note-container");
+  data['id'] = $content.attr('id').split("-")[1];
+  data['title'] = $content.find('.note-header h1').text().trim();
+  data['author'] = $content.attr('data-author');
+  data['date'] = parseStr($content.find('.pub-date').text());
+  data['content'] = parseStr($content.find('.note').text());
+  
+  notesData.push(data);
+}
+
 const handleElseFiles = ($, category, subCategory) => {
   const isBook = category === 'book';
   // music & movie are sharing the same structure
@@ -225,6 +249,8 @@ files.forEach((filePath) => {
     handleAnnotationFiles($, filePath.includes('detail'), filePath);
   } else if (filePath.includes('reviews') && filePath.includes('detail')) {
     handleReviewFiles($);
+  } else if (filePath.includes('notes') && filePath.includes('detail')) {
+    handleNotesFiles($);
   } else {
     handleElseFiles($, category, subCategory);
   }
@@ -240,4 +266,5 @@ exec(`mkdir -p ${loopFolderPath}/json`, (err, stdout, stderr) => {
   fs.writeFileSync(path.join(__dirname, '..', 'personal/json', 'movie.json'), JSON.stringify(movieData));
   fs.writeFileSync(path.join(__dirname, '..', 'personal/json', 'annotation.json'), JSON.stringify(annotationData));
   fs.writeFileSync(path.join(__dirname, '..', 'personal/json', 'reviews.json'), JSON.stringify(reviewsData));
+  fs.writeFileSync(path.join(__dirname, '..', 'personal/json', 'notes.json'), JSON.stringify(notesData));
 });
