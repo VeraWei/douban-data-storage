@@ -76,7 +76,7 @@ npm run load
 # 如果你想要获得完整的JSON 数据可以继续执行
 npm run parser
 
-# 执行完所有人物后，可以在你本地的 personal 文件夹下看到所有的数据内容，应该是一些html和几份json文件
+# 执行完所有任务后，可以在你本地的 personal 文件夹下看到所有的数据内容，是一些html和几份json文件
 # html 只做了简单的处理，可直接打开。
 ## output directory
 /personal
